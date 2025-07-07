@@ -15,7 +15,6 @@ buildscript {
         dependencies {
             classpath("com.android.tools.build:gradle:8.7.2")
             classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlin_version}")
-            classpath("com.facebook.react:react-native-gradle-plugin:0.77.2")
         }
     }
 }
@@ -97,7 +96,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.facebook.react:react-native'
+    implementation 'com.facebook.react:react-native:0.77.2'
     implementation "com.google.android.gms:play-services-base:${safeExtGet('googlePlayServicesBaseVersion', '18.5.0')}"
     implementation "com.google.android.gms:play-services-maps:${safeExtGet('googlePlayServicesMapsVersion', '19.1.0')}"
     implementation "com.google.android.gms:play-services-location:${safeExtGet('googlePlayServicesLocationVersion', '21.3.0')}"
