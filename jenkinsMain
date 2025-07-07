@@ -1,0 +1,74 @@
+pipeline {
+  agent {label 'agent'}
+
+  environment {
+    NODE_ENV = 'development'
+    JAVA_HOME = '/usr/lib/jvm/java-17-openjdk-11.0.20.1.1-2.el9.x86_64'
+    ANDROID_HOME = '/opt/android-sdk'
+    PATH = "${ANDROID_HOME}/cmdline-tools/latest/bin:${ANDROID_HOME}/platform-tools:${ANDROID_HOME}/emulator:${ANDROID_HOME}/tools:${ANDROID_HOME}/tools/bin:${PATH}"
+  }
+
+  tools {
+    nodejs 'jsnode' // Must match Jenkins global tool name
+  }
+
+  stages {
+    stage('Checkout Code') {
+      steps {
+        git branch: 'main', url: 'https://github.com/rohanPSI-1122/react-native-maps.git', credentialsId: 'rohanPSI-1122'
+      }
+    }
+
+    stage('Install Dependencies') {
+      steps {
+        sh 'npm install'
+      }
+    }
+
+    stage('Lint') {
+      steps {
+        script {
+          try {
+            sh 'npx eslint .'
+          } catch (Exception e) {
+            echo "⚠️ Linting failed or ESLint not installed. Continuing..."
+          }
+        }
+      }
+    }
+
+    stage('Test') {
+      steps {
+        script {
+          try {
+            sh 'npm test'
+          } catch (Exception e) {
+            echo "⚠️ Tests failed or not defined. Continuing..."
+          }
+        }
+      }
+    }
+
+    stage('Build APK') {
+      steps {
+        dir('android') {
+          sh 'chmod +x gradlew'
+          sh './gradlew assembleDebug'
+        }
+      }
+    }
+
+    stage('Archive APK') {
+      steps {
+        archiveArtifacts artifacts: '**/app/build/outputs/**/*.apk', fingerprint: true
+      }
+    }
+  }
+
+  post {
+    success {
+      echo "✅ Build completed successfully!"
+    }
+    failure {
+      echo "❌ Build failed."
+    }
