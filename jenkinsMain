@@ -53,7 +53,7 @@ pipeline {
 
     stage('Build APK') {
       steps {
-        dir('android') {
+        dir('react-native-maps/android') {
           sh 'chmod +x gradlew'
           sh './gradlew assembleDebug'
         }
