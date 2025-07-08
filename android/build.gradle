@@ -91,7 +91,8 @@ repositories {
 
 dependencies {
     // Use local project reference instead of versioned dependency
-    implementation project(':react-native')
+    implementation 'com.facebook.react:react-native:0.77.2'  // Do NOT use `project(':react-native')`
+
 
     implementation "com.google.android.gms:play-services-base:${safeExtGet('googlePlayServicesBaseVersion', '18.5.0')}"
     implementation "com.google.android.gms:play-services-maps:${safeExtGet('googlePlayServicesMapsVersion', '19.1.0')}"
