@@ -11,7 +11,7 @@ buildscript {
             mavenCentral()
         }
         dependencies {
-            classpath("com.facebook.react:react-native-gradle-plugin:0.77.2")
+            classpath(files("../node_modules/react-native/react.gradle"))
             classpath("com.android.tools.build:gradle:8.7.2")
             classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlin_version}")
         }
@@ -86,7 +86,7 @@ repositories {
 
     // Needed for React Native dependencies
     maven {
-        url("/home/ubuntu/workspace/react-native-maps/node_modules/react-native/packages/react-native/android")
+        url("/home/ubuntu/workspace/react-native-maps/node_modules/react-native/android")
     }
 }
 
