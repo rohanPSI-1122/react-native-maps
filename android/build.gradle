@@ -85,7 +85,7 @@ repositories {
 
     // Needed for React Native dependencies
     maven {
-        url("$rootDir/../node_modules/react-native/android")
+        url("/home/ubuntu/workspace/react-native-maps/node_modules/react-native/android")
     }
 }
 
