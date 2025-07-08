@@ -23,6 +23,8 @@ pipeline {
   steps {
     sh 'cd /home/ubuntu/workspace/react-native-maps && npm install'
     sh 'cd /home/ubuntu/workspace/react-native-maps && npm ci' // or 'yarn install'
+    sh 'cd /home/ubuntu/workspace/react-native-maps && npm install react-native-gradle-plugin'
+
   }
 }
 
