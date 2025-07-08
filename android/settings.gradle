@@ -5,7 +5,6 @@ pluginManagement {
         gradlePluginPortal()
     }
 
-    // 👇 This is the key fix
     resolutionStrategy {
         eachPlugin {
             if (requested.id.id == "com.android.library") {
@@ -22,11 +21,6 @@ pluginManagement {
 }
 
 dependencyResolutionManagement {
-    versionCatalogs {
-        libs {
-            from(files("gradle/libs.versions.toml"))
-        }
-    }
     repositories {
         google()
         mavenCentral()
