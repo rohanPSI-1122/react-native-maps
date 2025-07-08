@@ -1,2 +1,2 @@
-include ':react-native'
-project(':react-native').projectDir = new File(rootProject.projectDir, 'node_modules/react-native/android')
+include(":ReactAndroid")
+project(":ReactAndroid").projectDir = file("../node_modules/react-native/ReactAndroid")
