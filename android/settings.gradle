@@ -1,2 +1,37 @@
+pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+
+    // 👇 This is the key fix
+    resolutionStrategy {
+        eachPlugin {
+            if (requested.id.id == "com.android.library") {
+                useModule("com.android.tools.build:gradle:8.1.1")
+            }
+            if (requested.id.id == "org.jetbrains.kotlin.android") {
+                useModule("org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.0")
+            }
+            if (requested.id.id == "de.undercouch.download") {
+                useModule("de.undercouch:gradle-download-task:5.4.0")
+            }
+        }
+    }
+}
+
+dependencyResolutionManagement {
+    versionCatalogs {
+        libs {
+            from(files("gradle/libs.versions.toml"))
+        }
+    }
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
 include(":ReactAndroid")
 project(":ReactAndroid").projectDir = file("/home/ubuntu/workspace/react-native-maps/node_modules/react-native/ReactAndroid")
