@@ -21,6 +21,7 @@ pipeline {
 
     stage('Install Dependencies') {
   steps {
+    sh 'cd /home/ubuntu/workspace/react-native-maps && npm install'
     sh 'cd /home/ubuntu/workspace/react-native-maps && npm ci' // or 'yarn install'
   }
 }
