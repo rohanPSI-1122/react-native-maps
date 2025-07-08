@@ -92,7 +92,7 @@ repositories {
 
 dependencies {
     // Use local project reference instead of versioned dependency
-    implementation project(':ReactAndroid') ✅  // Do NOT use `project(':react-native')`
+    implementation project(':ReactAndroid') // Do NOT use `project(':react-native')`
 
 
     implementation "com.google.android.gms:play-services-base:${safeExtGet('googlePlayServicesBaseVersion', '18.5.0')}"
