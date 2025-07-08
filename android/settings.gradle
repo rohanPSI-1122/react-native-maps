@@ -1,3 +1,2 @@
-includeBuild('../node_modules/react-native-gradle-plugin')
 include(":ReactAndroid")
-project(":ReactAndroid").projectDir = file("../node_modules/react-native/ReactAndroid")
+project(":ReactAndroid").projectDir = file("/home/ubuntu/workspace/react-native-maps/node_modules/react-native/ReactAndroid")
