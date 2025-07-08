@@ -1,11 +1,11 @@
 pipeline {
-  agent { label 'agent' }
+  agent {label 'agent'}
 
   environment {
     NODE_ENV = 'development'
     JAVA_HOME = '/usr/lib/jvm/java-17-openjdk-17.0.14.0.7-2.el9.x86_64'
     ANDROID_HOME = '/opt/android-sdk'
-    PATH = "${ANDROID_HOME}/cmdline-tools/latest/bin:${ANDROID_HOME}/platform-tools:${ANDROID_HOME}/emulator:${ANDROID_HOME}/tools:${ANDROID_HOME}/tools/bin:${PATH}:${PATH}"
+    PATH = "${ANDROID_HOME}/cmdline-tools/latest/bin:${ANDROID_HOME}/platform-tools:${ANDROID_HOME}/emulator:${ANDROID_HOME}/tools:${ANDROID_HOME}/tools/bin:${PATH}"
   }
 
   tools {
@@ -15,30 +15,26 @@ pipeline {
   stages {
     stage('Checkout Code') {
       steps {
-        git branch: 'main',
-            url: 'https://github.com/rohanPSI-1122/react-native-maps.git',
-            credentialsId: 'rohanPSI-1122'
+        git branch: 'main', url: 'https://github.com/rohanPSI-1122/react-native-maps.git', credentialsId: 'rohanPSI-1122'
       }
     }
 
     stage('Install Dependencies') {
-      steps {
-        dir('react-native-maps') {
-          sh 'npm install'
-          // DO NOT run `npm ci` after `npm install`, use one or the other
-        }
-      }
-    }
+  steps {
+    sh 'cd /home/ubuntu/workspace/react-native-maps && npm install'
+ //   sh 'cd /home/ubuntu/workspace/react-native-maps && npm ci' // or 'yarn install'
+   // sh 'cd /home/ubuntu/workspace/react-native-maps && npm install react-native-gradle-plugin'
+
+  }
+}
 
     stage('Lint') {
       steps {
-        dir('react-native-maps') {
-          script {
-            try {
-              sh 'npx eslint .'
-            } catch (Exception e) {
-              echo "⚠️ Linting failed or ESLint not installed. Continuing..."
-            }
+        script {
+          try {
+            sh 'npx eslint .'
+          } catch (Exception e) {
+            echo "⚠️ Linting failed or ESLint not installed. Continuing..."
           }
         }
       }
@@ -46,13 +42,11 @@ pipeline {
 
     stage('Test') {
       steps {
-        dir('react-native-maps') {
-          script {
-            try {
-              sh 'npm test'
-            } catch (Exception e) {
-              echo "⚠️ Tests failed or not defined. Continuing..."
-            }
+        script {
+          try {
+            sh 'npm test'
+          } catch (Exception e) {
+            echo "⚠️ Tests failed or not defined. Continuing..."
           }
         }
       }
@@ -60,7 +54,7 @@ pipeline {
 
     stage('Build APK') {
       steps {
-        dir('react-native-maps/android') {
+        dir('android') {
           sh 'chmod +x gradlew'
           sh './gradlew assembleDebug'
         }
@@ -69,7 +63,7 @@ pipeline {
 
     stage('Archive APK') {
       steps {
-        archiveArtifacts artifacts: 'react-native-maps/android/app/build/outputs/**/*.apk', fingerprint: true
+        archiveArtifacts artifacts: '**/app/build/outputs/**/*.apk', fingerprint: true
       }
     }
   }
@@ -81,5 +75,4 @@ pipeline {
     failure {
       echo "❌ Build failed."
     }
-  }
-}
+}}
